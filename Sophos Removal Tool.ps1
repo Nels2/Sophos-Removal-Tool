@@ -48,6 +48,8 @@ taskkill /f /im ALsvc.exe
 taskkill /f /im swi_fc.exe
 taskkill /f /im swi_filter.exe
 taskkill /f /im spa.exe
+taskkill /f /im "Sophos UI.exe"
+taskkill /f /im SophosDiag.exe
 
 #Uninstall Sophos Network Threat Protection
 $SNTPVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
