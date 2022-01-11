@@ -35,6 +35,7 @@ net stop "SntpService"
 net stop "Sophos System Protection Service"
 net stop "Sophos Web Control Service"
 net stop "Sophos Endpoint Defense Service"
+net stop "HitmanPro.Alert service"
 
 #Redundant "Stop Sophos Services" check
 
@@ -204,3 +205,5 @@ sc.exe delete "swi_update"
 sc.exe delete "SntpService"
 sc.exe delete "Sophos System Protection Service"
 sc.exe delete "Sophos Endpoint Defense Service"
+sc.exe delete "HitmanPro.Alert service"
+
