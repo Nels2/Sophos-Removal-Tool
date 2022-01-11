@@ -14,7 +14,7 @@
 #                                                                     #
 #######################################################################
 
-#Disable Tamper Protection (may require reboot) //removing this as I do require this for my purpose.
+#Disable Tamper Protection (may require reboot) //removing this as I do not require this for my purpose.
 
 #Stop All Sophos Services
 
