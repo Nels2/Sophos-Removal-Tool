@@ -1,6 +1,6 @@
-﻿#######################################################################
+#######################################################################
 #                Sophos Removal Tool v2.0                             #  
-#                    By Drew Yeskatalas                               #
+#     By Drew Yeskatalas // modified by Nelson Orellana for 2022 use. #
 #                                                                     #
 #     This tool will stop all running Sophos Services and tasks,      #
 #     seek out uninstall strings for associated Sophos Products,      #
@@ -36,6 +36,13 @@ net stop "Sophos System Protection Service"
 net stop "Sophos Web Control Service"
 net stop "Sophos Endpoint Defense Service"
 net stop "HitmanPro.Alert service"
+net stop "Sophos Clean Service"
+net stop "Sophos MCS Agent"
+net stop "Sophos MCS Client"
+net stop "Sophos Device Encryption Service"
+net stop "Sophos Health Service"
+net stop "Sophos Safestore Service"
+net stop "Sophos File Scanner Service"
 
 #Redundant "Stop Sophos Services" check
 
@@ -50,6 +57,7 @@ taskkill /f /im swi_filter.exe
 taskkill /f /im spa.exe
 taskkill /f /im "Sophos UI.exe"
 taskkill /f /im SophosDiag.exe
+taskkill /f /im SavApi.exe
 
 #Uninstall Sophos Network Threat Protection
 $SNTPVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
@@ -162,7 +170,7 @@ Start-Sleep -Seconds 30
 #Uninstall Sophos Endpoint Defense
 $SEDVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
     Get-ItemProperty |
-        Where-Object {$_.DisplayName -match "Sophos Endpoint Defense" } |
+        Where-Object {$_.DisplayName -match "Sophos EndpointDefense" } |
             Select-Object -Property DisplayName, UninstallString
 
 ForEach ($ver in $SEDVer) {
@@ -174,19 +182,230 @@ ForEach ($ver in $SEDVer) {
     }
 }
 
+Start-Sleep -Seconds 30
+
+#Uninstall Sophos EndPoint Firewall
+$SEPFVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "Sophos Endpoint Firewall" } |
+            Select-Object -Property DisplayName, UninstallString
+
+ForEach ($ver in $SEPFVer) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd "/c $uninst /qn REBOOT=SUPPRESS /PASSIVE" -NoNewWindow
+    }
+
+}
 
 Start-Sleep -Seconds 30
 
-#Directory Cleanup
+#Uninstall Sophos EndPoint Self Help
+$SEPSHVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "Sophos Endpoint Self Help" } |
+            Select-Object -Property DisplayName, UninstallString
 
-Remove-Item -LiteralPath "C:\Program Files\Sophos*" -Force -Recurse
+ForEach ($ver in $SEPSHVer) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd "/c $uninst /qn REBOOT=SUPPRESS /PASSIVE" -NoNewWindow
+    }
+
+}
+
+Start-Sleep -Seconds 30
+
+#Uninstall Sophos Heartbeat
+$SHBVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "Sophos Heartbeat" } |
+            Select-Object -Property DisplayName, UninstallString
+
+ForEach ($ver in $SHBVer) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd "/c $uninst /qn REBOOT=SUPPRESS /PASSIVE" -NoNewWindow
+    }
+
+}
+
+Start-Sleep -Seconds 30
+
+#Uninstall Sophos Management
+$SMGMTVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "Sophos Management" } |
+            Select-Object -Property DisplayName, UninstallString
+
+ForEach ($ver in $SMGMTVer) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd "/c $uninst /qn REBOOT=SUPPRESS /PASSIVE" -NoNewWindow
+    }
+
+}
+
+Start-Sleep -Seconds 30
+
+#Uninstall Sophos AMSI Protection
+$SAMSIPVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "Sophos AMSI Protection" } |
+            Select-Object -Property DisplayName, UninstallString
+
+ForEach ($ver in $SAMSIPVer) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd "/c $uninst /qn REBOOT=SUPPRESS /PASSIVE" -NoNewWindow
+    }
+
+}
+
+Start-Sleep -Seconds 30
+
+#Uninstall Sophos File Scanner
+$SFSVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "Sophos File Scanner" } |
+            Select-Object -Property DisplayName, UninstallString
+
+ForEach ($ver in $SFSVer) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd "/c $uninst /qn REBOOT=SUPPRESS /PASSIVE" -NoNewWindow
+    }
+
+}
+
+Start-Sleep -Seconds 30
+
+#Uninstall Sophos ML Engine
+$SMEVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "Sophos ML Engine" } |
+            Select-Object -Property DisplayName, UninstallString
+
+ForEach ($ver in $SMEVer) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd "/c $uninst /qn REBOOT=SUPPRESS /PASSIVE" -NoNewWindow
+    }
+
+}
+
+Start-Sleep -Seconds 30
+
+#Uninstall Sophos Standalone Engine
+$SSAEVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "Sophos Standalone Engine" } |
+            Select-Object -Property DisplayName, UninstallString
+
+ForEach ($ver in $SSAEVer) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd "/c $uninst /qn REBOOT=SUPPRESS /PASSIVE" -NoNewWindow
+    }
+
+}
+
+Start-Sleep -Seconds 30
+
+#Uninstall Sophos UI
+$SUIVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "Sophos Endpoint Agent" } |
+            Select-Object -Property DisplayName, UninstallString
+
+ForEach ($ver in $SUIVer) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd "/c $uninst /qn REBOOT=SUPPRESS /PASSIVE" -NoNewWindow
+    }
+
+}
+
+Start-Sleep -Seconds 30
+
+#Uninstall Sophos Hitman Service
+$SHSVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "Sophos Exploit Protection" } |
+            Select-Object -Property DisplayName, UninstallString
+
+ForEach ($ver in $SHSVer) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd "/c $uninst /qn REBOOT=SUPPRESS /PASSIVE" -NoNewWindow
+    }
+
+}
+
+Start-Sleep -Seconds 30
+
+#Uninstall Sophos Clean 
+$SCSVer = Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall, HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall  |
+    Get-ItemProperty |
+        Where-Object {$_.DisplayName -match "Sophos Clean" } |
+            Select-Object -Property DisplayName, UninstallString
+
+ForEach ($ver in $SCSVer) {
+
+    If ($ver.UninstallString) {
+
+        $uninst = $ver.UninstallString
+        Start-Process cmd "/c $uninst /qn REBOOT=SUPPRESS /PASSIVE" -NoNewWindow
+    }
+
+}
+
+Start-Sleep -Seconds 30
+
+#Directory Cleanup --added sub directories as windows has issues removing them even with -recursive.
+
+Remove-Item -LiteralPath "C:\Program Files\Sophos\Endpoint Self Help" -Force -Recurse
+Remove-Item -LiteralPath "C:\Program Files\Sophos\Sophos AMSI Protection" -Force -Recurse
+Remove-Item -LiteralPath "C:\Program Files\Sophos\SophosUI" -Force -Recurse
 Remove-Item -LiteralPath "C:\Program Files\Sophos" -Force -Recurse
+Remove-Item -LiteralPath "C:\Program Files (x86)\Sophos\Sophos AMSI Protection" -Force -Recurse
+Remove-Item -LiteralPath "C:\Program Files (x86)\Sophos\Sophos Data Protection" -Force -Recurse
 Remove-Item -LiteralPath "C:\Program Files (x86)\Sophos" -Force -Recurse
+Remove-Item -LiteralPath "C:\ProgramData\Sophos\Management Communications System" -Force -Recurse
+Remove-Item -LiteralPath "C:\ProgramData\Sophos\Remote Management System" -Force -Recurse
+Remove-Item -LiteralPath "C:\ProgramData\Sophos\Sophos AMSI Protection" -Force -Recurse
+Remove-Item -LiteralPath "C:\ProgramData\Sophos\Sophos Anti-Virus" -Force -Recurse
+Remove-Item -LiteralPath "C:\ProgramData\Sophos\Sophos Data Protection" -Force -Recurse
+Remove-Item -LiteralPath "C:\ProgramData\Sophos\Sophos Diagnostic Utility" -Force -Recurse
+Remove-Item -LiteralPath "C:\ProgramData\Sophos\Sophos File Scanner" -Force -Recurse
+Remove-Item -LiteralPath "C:\ProgramData\Sophos\Sophos UI" -Force -Recurse
+Remove-Item -LiteralPath "C:\ProgramData\Sophos\Web Intelligence" -Force -Recurse
 Remove-Item -LiteralPath "C:\ProgramData\Sophos" -Force -Recurse
 
 #Remove Registry Keys
 
 REG Delete "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Sophos AutoUpdate Monitor" /f
+REG Delete "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Sophos UI.exe" /f
 
 #Redundant "Stop Sophos Services" check
 
