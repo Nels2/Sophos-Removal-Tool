@@ -16,6 +16,16 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
   exit
 }
+# adding admin Owner group for ProgramData folders....
+#Function AddAdminRights{} 
+#$acl = get-acl C:\ProgramData\Sophos
+#$rule = New-Object System.Security.AccessControl.FileSystemAccessRule("Domain Admins", "FullControl", "ContainerInherit", "ObjectInherit", "None", "Allow")
+#$acl.AddAccessRule($rule)
+
+
+
+
+
 
 #Stop All Sophos Services
 Function stop_DemSophosServices{
