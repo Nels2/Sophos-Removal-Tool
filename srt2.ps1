@@ -16,16 +16,18 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
   exit
 }
-# adding admin Owner group for ProgramData folders....
-#Function AddAdminRights{} 
-#$acl = get-acl C:\ProgramData\Sophos
-#$rule = New-Object System.Security.AccessControl.FileSystemAccessRule("Domain Admins", "FullControl", "ContainerInherit", "ObjectInherit", "None", "Allow")
-#$acl.AddAccessRule($rule)
+# adding admin Owner group for C: root folders....
+Function createAdminRights{
+    $acl_directories = "C:\ProgramData\Sophos", "C:\ProgramData\HitmanPro.Alert", "C:\Program Files\Sophos", "C:\Program Files (x86)\Sophos", "C:\Program Files (x86)\HitmanPro.Alert"
+    $rule = New-Object System.Security.AccessControl.FileSystemAccessRule("Domain Admins", "FullControl", "ContainerInherit", "ObjectInherit", "None", "Allow")
+    write-host ("*** creating admin rights rules for this script to work properly...")
+    foreach ($DirFile in $acl_directories) {
+        $acl = get-acl $DirFile
+        $acl.AddAccessRule($rule)
+        Set-Acl $DirFile $acl
+    }
 
-
-
-
-
+} 
 
 #Stop All Sophos Services
 Function stop_DemSophosServices{
@@ -93,6 +95,7 @@ stop_DemSophosServices
 wmic service where "caption like '%Sophos%'" call stopservice #Redundant "Stop Sophos Services" check
 sophosServicesAnFonem_taskkill
 sophosRegistry_Removal
+createAdminRights
 sophosDirectory_Removal
 #Remove Registry Keys
 REG Delete "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Sophos AutoUpdate Monitor" /f
