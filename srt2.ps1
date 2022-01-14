@@ -101,5 +101,7 @@ sophosDirectory_Removal
 REG Delete "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Sophos AutoUpdate Monitor" /f
 REG Delete "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Sophos UI.exe" /f
 REG Delete "HKLM\SOFTWARE\WOW6432Node\Sophos" /f
+REG Delete "HKLM\SOFTWARE\HitmanPro.Alert" /f
+REG Delete "HKLM|SOFTWARE\Sophos" /f
 wmic service where "caption like '%Sophos%'" call stopservice #Redundant "Stop Sophos Services" check
 sophosService_Removal
