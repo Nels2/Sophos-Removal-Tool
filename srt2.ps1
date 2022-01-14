@@ -1,7 +1,7 @@
 #######################################################################
 #                Sophos Removal Tool v2.0_NO2                         #  
-#   By Drew Yeskatalas / rewritten by Nelson Orellana for 2022 use.   #
-#                                                                     #
+#                Orginally By Drew Yeskatalas                         #
+#        Re-Created by Nelson Orellana for 2022 use.                  #
 #     This tool will stop all running Sophos Services and tasks,      #
 #     seek out uninstall strings for associated Sophos Products,      #
 #     And silently remove them.                                       # 
@@ -79,7 +79,7 @@ function sophosDirectory_Removal {
     $pathsTodelete = 'C:\Program Files\Sophos\Endpoint Self Help', 'C:\Program Files\Sophos\Sophos AMSI Protection', 'C:\Program Files\Sophos\SophosUI', 'C:\Program Files\Sophos', 'C:\Program Files (x86)\Sophos\Sophos AMSI Protection', 'C:\Program Files (x86)\Sophos\Sophos Data Protection', 'C:\Program Files (x86)\Sophos', 'C:\ProgramData\HitanPro.Alert', 'C:\ProgramData\Sophos\Management Communications System', 'C:\ProgramData\Sophos\Remote Management System', 'C:\ProgramData\Sophos\Sophos AMSI Protection', 'C:\ProgramData\Sophos\Sophos Anti-Virus', 'C:\ProgramData\Sophos\Sophos Data Protection', 'C:\ProgramData\Sophos\Sophos Diagnostic Utility', 'C:\ProgramData\Sophos\Sophos File Scanner', 'C:\ProgramData\Sophos\Sophos UI', 'C:\ProgramData\Sophos\Web Intelligence', 'C:\ProgramData\Sophos', 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Sophos'
     write-host ("*** cleaning directories related to Sophos...")
     foreach ($dirItem in $pathsTodelete) {
-        Get-ChildItem "$dirItem" -Include * -Recurse | Remove-Item -Force -Confirm:$false
+        Get-ChildItem "$dirItem" -Include * -Recurse | Remove-Item -Force -Recurse -Confirm:$false
     }
 }
 
