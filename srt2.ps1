@@ -102,7 +102,7 @@ sophosDirectory_Removal
 write-host ("*** deleting misc. sophos registry values...")
 REG Delete "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Sophos AutoUpdate Monitor" /f
 REG Delete "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Sophos UI.exe" /f
-Remove-Item "HKLM\SOFTWARE\WOW6432Node\Sophos" -Recurse
+Remove-Item -path "HKLM:\SOFTWARE\WOW6432Node\Sophos" -Recurse
 Remove-Item -Path "HKLM:\SOFTWARE\Sophos" -Recurse
 Remove-Item -Path "HKLM:\SOFTWARE\HitmanPro.Alert" -Recurse
 wmic service where "caption like '%Sophos%'" call stopservice #Redundant "Stop Sophos Services" check
