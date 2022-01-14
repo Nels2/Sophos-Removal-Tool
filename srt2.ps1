@@ -79,7 +79,7 @@ function sophosDirectory_Removal {
     $pathsTodelete = 'C:\Program Files\Sophos\Endpoint Self Help', 'C:\Program Files\Sophos\Sophos AMSI Protection', 'C:\Program Files\Sophos\SophosUI', 'C:\Program Files\Sophos', 'C:\Program Files (x86)\Sophos\Sophos AMSI Protection', 'C:\Program Files (x86)\Sophos\Sophos Data Protection', 'C:\Program Files (x86)\Sophos', 'C:\ProgramData\HitanPro.Alert', 'C:\ProgramData\Sophos\Management Communications System', 'C:\ProgramData\Sophos\Remote Management System', 'C:\ProgramData\Sophos\Sophos AMSI Protection', 'C:\ProgramData\Sophos\Sophos Anti-Virus', 'C:\ProgramData\Sophos\Sophos Data Protection', 'C:\ProgramData\Sophos\Sophos Diagnostic Utility', 'C:\ProgramData\Sophos\Sophos File Scanner', 'C:\ProgramData\Sophos\Sophos UI', 'C:\ProgramData\Sophos\Web Intelligence', 'C:\ProgramData\Sophos'
     write-host ("*** cleaning directories related to Sophos...")
     foreach ($dirItem in $pathsTodelete) {
-        Get-ChildItem "$dirItem" -Include * -Recurse | Remove-Item   
+        Get-ChildItem "$dirItem" -Include * -Recurse | Remove-Item -Confirm:$false
     }
 }
 
@@ -99,6 +99,7 @@ sophosRegistry_Removal
 createAdminRights
 sophosDirectory_Removal
 #Remove Registry Keys
+write-host ("*** deleting misc. sophos registry values...")
 REG Delete "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Sophos AutoUpdate Monitor" /f
 REG Delete "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Sophos UI.exe" /f
 Remove-Item "HKLM\SOFTWARE\WOW6432Node\Sophos" -Recurse
