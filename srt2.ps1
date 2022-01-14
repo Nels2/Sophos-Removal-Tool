@@ -78,7 +78,7 @@ function sophosDirectory_Removal {
     $pathsTodelete = 'C:\Program Files\Sophos\Endpoint Self Help', 'C:\Program Files\Sophos\Sophos AMSI Protection', 'C:\Program Files\Sophos\SophosUI', 'C:\Program Files\Sophos', 'C:\Program Files (x86)\Sophos\Sophos AMSI Protection', 'C:\Program Files (x86)\Sophos\Sophos Data Protection', 'C:\Program Files (x86)\Sophos', 'C:\ProgramData\HitanPro.Alert', 'C:\ProgramData\Sophos\Management Communications System', 'C:\ProgramData\Sophos\Remote Management System', 'C:\ProgramData\Sophos\Sophos AMSI Protection', 'C:\ProgramData\Sophos\Sophos Anti-Virus', 'C:\ProgramData\Sophos\Sophos Data Protection', 'C:\ProgramData\Sophos\Sophos Diagnostic Utility', 'C:\ProgramData\Sophos\Sophos File Scanner', 'C:\ProgramData\Sophos\Sophos UI', 'C:\ProgramData\Sophos\Web Intelligence', 'C:\ProgramData\Sophos'
     write-host ("*** cleaning directories related to Sophos...")
     foreach ($dirItem in $pathsTodelete) {
-        Remove-Item -LiteralPath "$dirItem" -Force -Recurse   
+        Get-ChildItem "$dirItem" -Include * -Recurse | Remove-Item   
     }
 }
 
